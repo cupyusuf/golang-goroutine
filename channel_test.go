@@ -58,3 +58,22 @@ func TestInOutChannel(t *testing.T) {
 
 	time.Sleep(5 * time.Second)
 }
+
+func TestBufferedChannel(t *testing.T) {
+	channel := make(chan string, 2)
+	defer close(channel)
+
+	go func() {
+		channel <- "Yusuf"
+		channel <- "Supriadi"
+	}()
+
+	go func() {
+		fmt.Println(<-channel)
+		fmt.Println(<-channel)
+	}()
+
+	time.Sleep(2 * time.Second)
+
+	fmt.Println("Selesai")
+}
